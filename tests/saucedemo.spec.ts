@@ -68,7 +68,7 @@ test.describe("SauceDemo", () => {
         await expect(error, "Error should say username is required").toContainText("Username is required");
       });
 
-      test.only("locked out user: error message is shown", async ({ page }) => {
+      test("locked out user: error message is shown", async ({ page }) => {
       await page.goto("https://www.saucedemo.com");
       await page.locator("[data-test='username']").fill("locked_out_user");
       await page.locator("[data-test='password']").fill("secret_sauce");

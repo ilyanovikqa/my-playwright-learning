@@ -67,8 +67,20 @@ test.describe("SauceDemo", () => {
         await expect(error, "Error message should be visible").toBeVisible();
         await expect(error, "Error should say username is required").toContainText("Username is required");
       });
+
+      test("locked out user - error message is shown", async ({ page }) => {
+      await page.goto("https://www.saucedemo.com");
+      await page.locator("[data-test='username']").fill("locked_out_user");
+      await page.locator("[data-test='password']").fill("secret_sauce");
+      await page.locator("[data-test='login-button']").click();
+
+      const error = page.locator("[data-test='error']");
+      await expect(error, "Should show locked out error message").toBeVisible();
+      await expect(error, "Should show exact locked out error text").toHaveText(
+      "Epic sadface: Sorry, this user has been locked out.");
+      });
     });
-  });
+  }); 
 
   test.describe("Cart", () => {
     test.beforeEach(async ({ page }) => {
